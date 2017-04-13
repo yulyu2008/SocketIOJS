@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+		<script src="index.js"></script>
+		<script src="manager.js"></script>
+		<script src="on.js"></script>
+		<script src="socket.js"></script>
+		<script src="url.js"></script>
+		<script src="socket.io.js"></script>
+		<script type="text/javascript">
+
+			function connect(url, login_event) {
+				console.log(url)
+     		 	var socket = io(url);
+        		socket.on('connect', function(){
+        		    console.log('hahah');
+        		    socket.emit('login', login_event, function (data) {
+        		        console.log('emit'+data);
+        		        });
+        		    });
+        		socket.on('sendMsgP',function(data){
+        		    console.log('sendMsgP'+data);
+        		    window.android.startFunction(data)
+        		});
+
+			}
+
+			function close(arg) {
+				socket.disconnect();
+			}
+		</script>
+	</head>
+
+	<body>
+		HTML 内容显示 <br/>
+		<h1>
+    <div id="content">内容显示</div>
+</h1>
+		<br/>
+		<input type="button" value="点击调用java代码" onclick="window.android.startFunction()" />
+		<br/>
+		<input type="button" value="点击调用java代码并传递参数" onclick="window.android.startFunction('http://blog.csdn.net/Leejizhou')" />
+	</body>
+
+</html>
